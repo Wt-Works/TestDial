@@ -123,18 +123,9 @@ ribi::Help ribi::TestDialMenuDialog::GetHelp() const noexcept
   );
 }
 
-boost::shared_ptr<const ribi::Program> ribi::TestDialMenuDialog::GetProgram() const noexcept
-{
-  const boost::shared_ptr<const Program> p {
-    new ProgramTestDial
-  };
-  assert(p);
-  return p;
-}
-
 std::string ribi::TestDialMenuDialog::GetVersion() const noexcept
 {
-  return "2.3";
+  return "3.0";
 }
 
 std::vector<std::string> ribi::TestDialMenuDialog::GetVersionHistory() const noexcept
@@ -147,7 +138,8 @@ std::vector<std::string> ribi::TestDialMenuDialog::GetVersionHistory() const noe
     "2011-08-07: Version 2.0: conformized architure for MysteryMachine",
     "2011-08-31: Version 2.1: added more testing option, added image to Welcome page of website version",
     "2013-11-05: version 2.2: conformized for ProjectRichelBilderbeekConsole",
-    "2014-01-17: version 2.3: added displayal as text in desktop application"
+    "2014-01-17: version 2.3: added displayal as text in desktop application",
+    "2015-11-21: version 3.0: moved to own GitHub",
   };
 }
 
