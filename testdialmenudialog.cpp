@@ -32,10 +32,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "dial.h"
 #include "dialwidget.h"
 #include "drawcanvas.h"
-#include "richelbilderbeekprogram.h"
+#include "plane.h"
 #include "textcanvas.h"
 #include "trace.h"
 #include "testtimer.h"
+#include "widget.h"
 #pragma GCC diagnostic pop
 
 int ribi::TestDialMenuDialog::ExecuteSpecific(const std::vector<std::string>& argv) noexcept
@@ -74,18 +75,14 @@ int ribi::TestDialMenuDialog::ExecuteSpecific(const std::vector<std::string>& ar
   //Set the position like a clock would
   const double position = static_cast<double>(hour % 12) / 12.0;
 
-  const boost::shared_ptr<DialWidget> widget(
-    new DialWidget(position)
-  );
+  const DialWidget widget(position);
 
 
-  std::cout << (*widget->ToTextCanvas(10)) << '\n';
+  std::cout << widget.ToTextCanvas(10) << '\n';
   {
-    const boost::shared_ptr<ribi::DrawCanvas> canvas {
-      widget->ToDrawCanvas(10)
-    };
-    canvas->SetColorSystem(CanvasColorSystem::invert);
-    std::cout << (*canvas) << '\n';
+    DrawCanvas canvas{widget.ToDrawCanvas(10)};
+    canvas.SetColorSystem(CanvasColorSystem::invert);
+    std::cout << canvas << '\n';
   }
   std::cout << "Current time: " << t << std::endl;
   return 0;
@@ -151,12 +148,20 @@ void ribi::TestDialMenuDialog::Test() noexcept
     if (is_tested) return;
     is_tested = true;
   }
+  {
+    const Plane::Coordinat3D p1( 1.0, 2.0,3.0);
+    const Plane::Coordinat3D p2( 4.0, 6.0,9.0);
+    const Plane::Coordinat3D p3(12.0,11.0,9.0);
+    const Plane p(p1,p2,p3);
+    Widget();
+    Dial();
+    DrawCanvas();
+    DialWidget();
+  }
   const TestTimer test_timer(__func__,__FILE__,1.0);
   {
-    const boost::shared_ptr<DialWidget> dial(
-      new DialWidget
-    );
-    assert(dial->GetDial());
+    TestDialMenuDialog d;
+    d.Execute( { "TestDial" });
   }
 }
 #endif
